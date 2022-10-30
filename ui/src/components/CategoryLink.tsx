@@ -25,6 +25,9 @@ export default class CategoryLink extends Component<ICategory> {
       <>
         <Link
           marginRight={1}
+          rel={"noopener"}
+          href={categoryLink}
+          target={"_blank"}
           onClick={() => this.desktop.openUrl(categoryLink)}
         >
           {category}

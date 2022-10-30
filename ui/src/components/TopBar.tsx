@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Toolbar from "@mui/material/Toolbar";
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import {Button, Card, IconButton, Stack, Typography} from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import FaceBookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -27,17 +27,8 @@ export default class TopBar extends Component {
   render() {
     return (
       <>
-        <AppBar position="static" color="inherit">
+        <Card sx={{ flexGrow: 1 }}>
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="refresh"
-              sx={{ mr: 2 }}
-            >
-              <RefreshIcon />
-            </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Docker Blog
             </Typography>
@@ -56,7 +47,7 @@ export default class TopBar extends Component {
               </Button>
             </Stack>
           </Toolbar>
-        </AppBar>
+        </Card>
       </>
     );
   }
