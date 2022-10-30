@@ -1,14 +1,22 @@
 package main
 
 import (
+	"context"
+	"encoding/json"
 	"flag"
+	"github.com/mmcdole/gofeed"
 	"log"
 	"net"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
+)
+
+const (
+	dockerFeed = "https://www.docker.com/feed/"
 )
 
 func main() {
@@ -17,7 +25,7 @@ func main() {
 	flag.Parse()
 
 	os.RemoveAll(socketPath)
-	
+
 	logrus.New().Infof("Starting listening on %s\n", socketPath)
 	router := echo.New()
 	router.HideBanner = true
@@ -30,8 +38,7 @@ func main() {
 	}
 	router.Listener = ln
 
-	router.GET("/hello", hello)
-
+	router.GET("/feed", getFeed)
 	log.Fatal(router.Start(startURL))
 }
 
@@ -39,10 +46,23 @@ func listen(path string) (net.Listener, error) {
 	return net.Listen("unix", path)
 }
 
-func hello(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, HTTPMessageBody{Message: "hello"})
+func getFeed(ctx echo.Context) error {
+	fp := gofeed.NewParser()
+	cont, cancel := context.WithTimeout(context.Background(), time.Second*60)
+	defer cancel()
+	feedRaw, err := fp.ParseURLWithContext(dockerFeed, cont)
+	if err != nil {
+		return err
+	}
+
+	dat, err := json.Marshal(feedRaw)
+	if err != nil {
+		return err
+	}
+	log.Println(dat)
+	return ctx.JSON(http.StatusOK, HTTPMessageBody{Feed: feedRaw})
 }
 
 type HTTPMessageBody struct {
-	Message string
+	Feed *gofeed.Feed
 }

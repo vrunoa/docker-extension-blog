@@ -23,8 +23,8 @@ COPY ui /ui
 RUN npm run build
 
 FROM alpine
-LABEL org.opencontainers.image.title="docker-extension-news" \
-    org.opencontainers.image.description="A Docker extension that gets you closer to docker news & community" \
+LABEL org.opencontainers.image.title="docker-extension-blog" \
+    org.opencontainers.image.description="A Docker extension that gets you closer to docker blog & community" \
     org.opencontainers.image.vendor="vrunoa" \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
     com.docker.extension.screenshots="" \
@@ -38,4 +38,4 @@ COPY docker-compose.yaml .
 COPY metadata.json .
 COPY docker.svg .
 COPY --from=client-builder /ui/build ui
-CMD /service -socket /run/guest-services/extension-docker-extension-news.sock
+CMD /service -socket /run/guest-services/extension-docker-extension-blog.sock

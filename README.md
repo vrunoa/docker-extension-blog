@@ -1,1 +1,1 @@
-# docker-extension-news
+# docker-extension-blog

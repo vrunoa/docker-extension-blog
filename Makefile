@@ -1,4 +1,4 @@
-IMAGE?=vrunoa/docker-extension-news
+IMAGE?=vrunoa/docker-extension-blog
 TAG?=latest
 
 BUILDER=buildx-multi-arch
