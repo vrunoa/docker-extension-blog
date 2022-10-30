@@ -1,4 +1,6 @@
 import { createDockerDesktopClient } from "@docker/extension-api-client";
+import electron from 'electron-to-chromium';
+console.log(electron)
 
 const client = createDockerDesktopClient();
 
@@ -12,6 +14,6 @@ export default class DesktopClientHelper {
   }
 
   toast(msg: string): void {
-    client.desktopUI.toast.error(`Failed to load fed`);
+    client.desktopUI.toast.error(msg);
   }
 }

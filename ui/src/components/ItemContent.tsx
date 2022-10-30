@@ -1,6 +1,6 @@
 import { CheerioAPI, load } from "cheerio";
 import { Component } from "react";
-import { IItem } from "../interfaces";
+import {IItem, Markup} from "../interfaces";
 
 const sanitizers = {
   video: ($: CheerioAPI) => {
@@ -36,11 +36,11 @@ function sanitize(content: string): string {
   for (let s of Object.keys(sanitizers)) {
     sanitizers[s]($);
   }
-  console.log($("body").html());
+  // console.log($("body").html());
   return $("body").html();
 }
 
-function markup(content): any {
+function markup(content): Markup {
   return { __html: sanitize(content) };
 }
 

@@ -47,7 +47,7 @@ export function App() {
       </Box>
       <Box sx={{ flexGrow: 1 }}>{visible && <LinearProgress />}</Box>
       <Feed feed={response} />
-      <Box sx={{ flexGrow: 1 }}>{visible &&
+      <Box sx={{ flexGrow: 1 }}>
         <Button
           sx={{ flexGrow: 1 }}
           fullWidth={true}
@@ -57,7 +57,7 @@ export function App() {
           }}
         >
           More
-        </Button>}
+        </Button>
       </Box>
     </>
   );

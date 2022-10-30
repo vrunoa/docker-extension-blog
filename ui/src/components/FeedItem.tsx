@@ -24,7 +24,7 @@ export default class FeedItem extends Component<IItem> {
     this.desktop = new DesktopClientHelper();
   }
 
-  formatDate = (datetime: string) => {
+  formatDate = (datetime: string): string => {
     return moment(datetime, "").fromNow();
   };
 
@@ -68,7 +68,7 @@ export default class FeedItem extends Component<IItem> {
             <CardActions>
               <Stack direction="row" alignItems="end" sx={{ flexGrow: 1 }}>
                 <LocalOfferIcon sx={{ marginRight: "0.5em" }} />
-                {this.props.item.categories.map((cat, i) => {
+                {this.props.item?.categories?.map((cat, i) => {
                   return <CategoryLink category={cat} />;
                 })}
               </Stack>

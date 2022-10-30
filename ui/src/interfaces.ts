@@ -1,5 +1,3 @@
-import { DockerDesktopClient } from "@docker/extension-api-client-types/dist/v1";
-
 export interface Author {
   name: string;
 }
@@ -29,4 +27,8 @@ export interface FeedResponse {
 
 export interface ICategory {
   category: string;
+}
+
+export interface Markup {
+  __html: string
 }

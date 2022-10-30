@@ -33,16 +33,16 @@ export default class TopBar extends Component {
               Docker Blog
             </Typography>
             <Stack direction="row" alignItems="end">
-              <Button onClick={(el) => this.desktop.openUrl(links.fb)}>
+              <Button size={"small"} onClick={(el) => this.desktop.openUrl(links.fb)}>
                 <FaceBookIcon />
               </Button>
-              <Button onClick={(el) => this.desktop.openUrl(links.tw)}>
+              <Button size={"small"} onClick={(el) => this.desktop.openUrl(links.tw)}>
                 <TwitterIcon />
               </Button>
-              <Button onClick={(el) => this.desktop.openUrl(links.yt)}>
+              <Button size={"small"} onClick={(el) => this.desktop.openUrl(links.yt)}>
                 <YoutubeIcon />
               </Button>
-              <Button onClick={(el) => this.desktop.openUrl(links.in)}>
+              <Button size={"small"} onClick={(el) => this.desktop.openUrl(links.in)}>
                 <LinkedInIcon />
               </Button>
             </Stack>
