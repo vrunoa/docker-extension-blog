@@ -1,32 +1,30 @@
 import React, {Component} from "react";
-import {ICategory} from "./interfaces";
+import {ICategory} from "../interfaces";
 import {Link} from "@mui/material";
-import {createDockerDesktopClient} from "@docker/extension-api-client";
+import DesktopClientHelper from "../desktop";
 
-const client = createDockerDesktopClient();
 
 export default class CategoryLink extends Component<ICategory> {
 
+    desktop: DesktopClientHelper
+
     constructor(props) {
         super(props);
+        this.desktop = new DesktopClientHelper();
     }
 
     sanitizeCategory(category: string): string {
         category = category.toLowerCase();
-        const whiteSpace = /\s/
+        const whiteSpace = /[\s\.]/
         category = category.replace(whiteSpace, "-")
         return category
-    }
-
-    openUrl(url: string) {
-        client.host.openExternal(url);
     }
 
     render () {
         const category = this.sanitizeCategory(this.props.category)
         const categoryLink = `https://docker.com/blog/tag/${category}`
         return <>
-            <Link underline={"none"} marginRight={1} onClick={() => this.openUrl(categoryLink)}>{category}</Link>
+            <Link marginRight={1} onClick={() => this.desktop.openUrl(categoryLink)}>{category}</Link>
         </>
     }
 }

@@ -1,6 +1,6 @@
-import {CheerioAPI, load} from 'cheerio'
+import {CheerioAPI, load} from 'cheerio';
 import {Component} from "react";
-import {IItem} from "./interfaces";
+import {IItem} from "../interfaces";
 
 const sanitizers = {
     video: ($: CheerioAPI) => {
@@ -12,11 +12,14 @@ const sanitizers = {
     a: ($: CheerioAPI) => {
         const as = $("a")
         for (let el of as) {
-            console.log(el.attribs.href)
-            delete el.attribs.href
-            delete el.attribs.rel
-            delete el.attribs.target
-            el.attribs.href = "#"
+            const href = el.attribs.href;
+            if (href.startsWith("#")) {
+                continue;
+            }
+            delete el.attribs.href;
+            delete el.attribs.rel;
+            delete el.attribs.target;
+            // el.attribs.href = "#"
         }
     },
     img: ($: CheerioAPI) => {
@@ -33,7 +36,7 @@ function sanitize(content: string): string {
     for (let s of Object.keys(sanitizers)) {
         sanitizers[s]($)
     }
-    // console.log($("body").html())
+    console.log($("body").html())
     return $("body").html()
 }
 
@@ -41,12 +44,7 @@ function markup(content): any {
     return {__html: sanitize(content)}
 }
 
-export default class Content extends Component <IItem>{
-
-    constructor(props) {
-        super(props)
-        // console.log(this.props.item)
-    }
+export default class ItemContent extends Component <IItem>{
 
     render() {
         return <>

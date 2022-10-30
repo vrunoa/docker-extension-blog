@@ -1,25 +1,20 @@
-import {Button, Card, CardActions, CardContent, Divider, Typography, Box, Stack, Link, Fab} from "@mui/material";
-import {IItem, Item} from "./interfaces";
+import {Card, CardActions, CardContent, Typography, Box, Stack, Fab} from "@mui/material";
+import {IItem} from "../interfaces";
 import React, {Component} from "react";
-import InnerHTML from "./Content";
-import {DockerDesktopClient} from "@docker/extension-api-client-types/dist/v1";
-import {createDockerDesktopClient} from "@docker/extension-api-client";
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import LinkIcon from '@mui/icons-material/Link';
 import moment from "moment";
 import CategoryLink from "./CategoryLink";
+import ItemContent from "./ItemContent";
+import DesktopClientHelper from "../desktop";
 
-export default class CardItem extends Component<IItem> {
+export default class FeedItem extends Component<IItem> {
 
-    client: DockerDesktopClient
+    desktop: DesktopClientHelper
 
     constructor(props) {
         super(props);
-        this.client = createDockerDesktopClient();
-    }
-
-    openUrl = (url: string) => {
-        this.client.host.openExternal(url);
+        this.desktop = new DesktopClientHelper()
     }
 
     formatDate = (datetime: string) => {
@@ -40,7 +35,7 @@ export default class CardItem extends Component<IItem> {
                             </Typography>
                         </Stack>
                         <Stack sx={{ flexGrow: 1, marginBottom: "1em" }} alignItems={"end"}>
-                            <Fab size="small" onClick={() => this.openUrl(this.props.item.link)}>
+                            <Fab size="small" onClick={() => this.desktop.openUrl(this.props.item.link)}>
                                 <LinkIcon />
                             </Fab>
                         </Stack>
@@ -48,7 +43,7 @@ export default class CardItem extends Component<IItem> {
                             {this.props.item.description}
                         </Typography>
                         <Typography variant="body2">
-                            <InnerHTML item={this.props.item} />
+                            <ItemContent item={this.props.item} />
                         </Typography>
                     </CardContent>
                     <CardActions>
