@@ -13,7 +13,7 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LinkIcon from "@mui/icons-material/Link";
 import moment from "moment";
 import CategoryLink from "./CategoryLink";
-import ItemContent from "./ItemContent";
+import FeedItemContent from "./FeedItemContent";
 import DesktopClientHelper from "../desktop";
 
 export default class FeedItem extends Component<IItem> {
@@ -62,7 +62,7 @@ export default class FeedItem extends Component<IItem> {
                 {this.props.item.description}
               </Typography>
               <Typography variant="body2">
-                <ItemContent item={this.props.item} />
+                <FeedItemContent item={this.props.item} />
               </Typography>
             </CardContent>
             <CardActions>

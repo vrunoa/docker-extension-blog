@@ -6,7 +6,7 @@ import moment from "moment";
 
 export default class Feed extends Component<IFeed> {
   formatUpdated(datetime: string): string {
-    return moment(datetime).format("MMMM Do YYYY, h:mm:ss a");
+    return moment(datetime).format("MMMM Do YYYY, h:mm a");
   }
 
   render() {

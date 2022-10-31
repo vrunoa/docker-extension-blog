@@ -44,7 +44,7 @@ function markup(content): Markup {
   return { __html: sanitize(content) };
 }
 
-export default class ItemContent extends Component<IItem> {
+export default class FeedItemContent extends Component<IItem> {
   render() {
     return (
       <>

@@ -9,17 +9,19 @@ import { FeedResponse } from "./interfaces";
 import DesktopClientHelper from "./desktop";
 import TopBar from "./components/TopBar";
 
-function parseFeed(result: any): FeedResponse {
-  return {
-    updated: result.Feed?.updated,
-    items: result.Feed?.items,
-  };
-}
+
 
 export function App() {
   const [response, setResponse] = React.useState<FeedResponse>();
   const [visible, setVisible] = React.useState<boolean>();
   const desktop = new DesktopClientHelper();
+
+  const parseFeed = (result: any): FeedResponse => {
+    return {
+      updated: result.Feed?.updated,
+      items: result.Feed?.items,
+    };
+  }
 
   const fetchAndDisplayResponse = async () => {
     const result = await desktop.get("/feed");
@@ -34,7 +36,7 @@ export function App() {
     setVisible(true);
     fetchAndDisplayResponse().catch((err) => {
       console.error(err);
-      desktop.toast("Failed to load feed! :(");
+      desktop.toast("Failed to load blog feed. Try again in a bit");
     }).finally(()=>{
       setVisible(false);
     });

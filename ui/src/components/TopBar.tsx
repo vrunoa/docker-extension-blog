@@ -29,22 +29,25 @@ export default class TopBar extends Component {
       <>
         <Card sx={{ flexGrow: 1 }}>
           <Toolbar>
+            <IconButton edge="start" size={"small"}>
+              <RefreshIcon />
+            </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Docker Blog
             </Typography>
             <Stack direction="row" alignItems="end">
-              <Button size={"small"} onClick={(el) => this.desktop.openUrl(links.fb)}>
+              <IconButton size={"small"} onClick={(el) => this.desktop.openUrl(links.fb)}>
                 <FaceBookIcon />
-              </Button>
-              <Button size={"small"} onClick={(el) => this.desktop.openUrl(links.tw)}>
+              </IconButton>
+              <IconButton size={"small"} onClick={(el) => this.desktop.openUrl(links.tw)}>
                 <TwitterIcon />
-              </Button>
-              <Button size={"small"} onClick={(el) => this.desktop.openUrl(links.yt)}>
+              </IconButton>
+              <IconButton size={"small"} onClick={(el) => this.desktop.openUrl(links.yt)}>
                 <YoutubeIcon />
-              </Button>
-              <Button size={"small"} onClick={(el) => this.desktop.openUrl(links.in)}>
+              </IconButton>
+              <IconButton size={"small"} onClick={(el) => this.desktop.openUrl(links.in)}>
                 <LinkedInIcon />
-              </Button>
+              </IconButton>
             </Stack>
           </Toolbar>
         </Card>
