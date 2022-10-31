@@ -45,7 +45,7 @@ export function App() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <TopBar />
+        <TopBar refresher={fetchFeed} />
       </Box>
       <Box sx={{ flexGrow: 1 }}>{visible && <LinearProgress />}</Box>
       <Feed feed={response} />

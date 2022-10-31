@@ -8,6 +8,7 @@ import YoutubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import AppBar from "@mui/material/AppBar";
 import DesktopClientHelper from "../desktop";
+import {ITopBar} from "../interfaces";
 
 const links = {
   fb: "https://www.facebook.com/docker.run",
@@ -16,7 +17,7 @@ const links = {
   in: "https://www.linkedin.com/company/docker",
 };
 
-export default class TopBar extends Component {
+export default class TopBar extends Component<ITopBar> {
   desktop: DesktopClientHelper;
 
   constructor(props) {
@@ -29,7 +30,7 @@ export default class TopBar extends Component {
       <>
         <Card sx={{ flexGrow: 1 }}>
           <Toolbar>
-            <IconButton edge="start" size={"small"}>
+            <IconButton edge="start" size={"small"} onClick={() => this.props.refresher()}>
               <RefreshIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

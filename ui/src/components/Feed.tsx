@@ -22,7 +22,7 @@ export default class Feed extends Component<IFeed> {
           Last updated: {this.formatUpdated(this.props.feed?.updated)}
         </Typography>
         {this.props.feed?.items?.map((item, i) => {
-          return item.description ? <FeedItem item={item} /> : "";
+          return item.description ? <FeedItem item={item} key={`item-${i}`} /> : "";
         })}
       </>
     );

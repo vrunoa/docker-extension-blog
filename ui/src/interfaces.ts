@@ -32,3 +32,7 @@ export interface ICategory {
 export interface Markup {
   __html: string
 }
+
+export interface ITopBar {
+  refresher: any
+}
