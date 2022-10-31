@@ -1,0 +1,3 @@
+services:
+  docker-extension-blog:
+    image: ${DESKTOP_PLUGIN_IMAGE}
