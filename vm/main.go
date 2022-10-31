@@ -3,20 +3,22 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/mmcdole/gofeed"
-	"log"
+
 	"net"
 	"net/http"
 	"os"
 	"time"
 
 	"github.com/labstack/echo"
+	"github.com/mmcdole/gofeed"
 	"github.com/sirupsen/logrus"
 )
 
 const (
 	dockerFeed = "https://www.docker.com/feed/"
 )
+
+var logger = logrus.New()
 
 func main() {
 	var socketPath string
@@ -25,7 +27,7 @@ func main() {
 
 	os.RemoveAll(socketPath)
 
-	logrus.New().Infof("Starting listening on %s\n", socketPath)
+	logger.Infof("starting listening on %s\n", socketPath)
 	router := echo.New()
 	router.HideBanner = true
 
@@ -33,12 +35,12 @@ func main() {
 
 	ln, err := listen(socketPath)
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 	router.Listener = ln
 
 	router.GET("/feed", getFeed)
-	log.Fatal(router.Start(startURL))
+	logger.Fatal(router.Start(startURL))
 }
 
 func listen(path string) (net.Listener, error) {
@@ -47,15 +49,17 @@ func listen(path string) (net.Listener, error) {
 
 func getFeed(ctx echo.Context) error {
 	fp := gofeed.NewParser()
-	cont, cancel := context.WithTimeout(context.Background(), time.Second*60)
+	cont, cancel := context.WithTimeout(ctx.Request().Context(), time.Second*60)
 	defer cancel()
 	feedRaw, err := fp.ParseURLWithContext(dockerFeed, cont)
 	if err != nil {
-		return err
+		logrus.Warnf("failed to get feed: %v", err.Error())
+		return ctx.JSON(http.StatusInternalServerError, HTTPMessageBody{Error: err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, HTTPMessageBody{Feed: feedRaw})
 }
 
 type HTTPMessageBody struct {
-	Feed *gofeed.Feed
+	Error string
+	Feed  *gofeed.Feed
 }
