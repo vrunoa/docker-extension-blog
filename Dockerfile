@@ -24,7 +24,7 @@ RUN npm run build
 
 FROM alpine
 LABEL org.opencontainers.image.title="docker-extension-blog" \
-    org.opencontainers.image.description="A Docker extension that gets you closer to docker blog & community" \
+    org.opencontainers.image.description="Get the latest news, tips and tricks about Docker with this extension" \
     org.opencontainers.image.vendor="vrunoa" \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
     com.docker.extension.screenshots="" \
