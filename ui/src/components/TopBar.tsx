@@ -11,7 +11,7 @@ import { ITopBar } from "../interfaces";
 
 const links = {
   fb: "https://www.facebook.com/docker.run",
-  tw: "https://www.facebook.com/docker.run",
+  tw: "https://twitter.com/Docker",
   yt: "https://www.youtube.com/user/dockerrun",
   in: "https://www.linkedin.com/company/docker",
 };

@@ -16,7 +16,7 @@ const sanitizers = {
       if (href.startsWith("#")) {
         continue;
       }
-      el.attribs.target = "blank";
+      el.attribs.target = "_blank";
       el.attribs.onclick = `eval(window.ddClient.host.openExternal("${href}"))`;
     }
   },

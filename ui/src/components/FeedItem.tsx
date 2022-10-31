@@ -44,7 +44,7 @@ export default class FeedItem extends Component<IItem> {
                   {this.formatDate(this.props.item.published)}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  by {this.props.item.author.name}
+                  by {this.props.item.author?.name}
                 </Typography>
               </Stack>
               <Stack
@@ -68,7 +68,7 @@ export default class FeedItem extends Component<IItem> {
             <CardActions>
               <Stack direction="row" alignItems="end" sx={{ flexGrow: 1 }}>
                 <LocalOfferIcon sx={{ marginRight: "0.5em" }} />
-                {this.props.item?.categories?.map((cat, i) => {
+                {this.props.item.categories?.map((cat, i) => {
                   return (
                     <CategoryLink category={cat} key={`category-${cat}-i`} />
                   );

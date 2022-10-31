@@ -13,8 +13,8 @@ export default class CategoryLink extends Component<ICategory> {
 
   sanitizeCategory(category: string): string {
     category = category.toLowerCase();
-    const whiteSpace = /[\s\.]/;
-    category = category.replace(whiteSpace, "-");
+    const reFixer = /[\s\.]/;
+    category = category.replace(reFixer, "-");
     return category;
   }
 
@@ -25,7 +25,6 @@ export default class CategoryLink extends Component<ICategory> {
       <>
         <Link
           marginRight={1}
-          rel={"noopener"}
           href={categoryLink}
           target={"_blank"}
           onClick={() => this.desktop.openUrl(categoryLink)}

@@ -23,7 +23,7 @@ export default class Feed extends Component<IFeed> {
         </Typography>
         {this.props.feed?.items?.map((item, i) => {
           return item.description ? (
-            <FeedItem item={item} key={`item-${i}`} />
+            <FeedItem item={item} key={`feed-item-${i}`} />
           ) : (
             ""
           );
