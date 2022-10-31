@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"flag"
 	"github.com/mmcdole/gofeed"
 	"log"
@@ -54,12 +53,6 @@ func getFeed(ctx echo.Context) error {
 	if err != nil {
 		return err
 	}
-
-	dat, err := json.Marshal(feedRaw)
-	if err != nil {
-		return err
-	}
-	log.Println(dat)
 	return ctx.JSON(http.StatusOK, HTTPMessageBody{Feed: feedRaw})
 }
 
