@@ -19,7 +19,12 @@
   display: inline-block;
   background-color: #0b214a !important;
   color: #d1edff !important;
-  padding-left: 2px !important;
   overflow-x: scroll;
   width: 100%;
 }
+
+.feed-item-content .wp-block-syntaxhighlighter-code pre {
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+
