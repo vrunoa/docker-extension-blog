@@ -5,7 +5,7 @@ import {
   Typography,
   Box,
   Stack,
-  Fab,
+  Fab, Tooltip,
 } from "@mui/material";
 import { IItem } from "../interfaces";
 import React, { Component } from "react";
@@ -51,17 +51,19 @@ export default class FeedItem extends Component<IItem> {
                 sx={{ flexGrow: 1, marginBottom: "1em" }}
                 alignItems={"end"}
               >
-                <Fab
-                  size="small"
-                  onClick={() => this.desktop.openUrl(this.props.item.link)}
-                >
-                  <LinkIcon />
-                </Fab>
+                <Tooltip title={"open"}>
+                  <Fab
+                    size="small"
+                    onClick={() => this.desktop.openUrl(this.props.item.link)}
+                  >
+                    <LinkIcon />
+                  </Fab>
+                </Tooltip>
               </Stack>
               <Typography variant="h6" component="div">
                 {this.props.item.description}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2" component="div">
                 <FeedItemContent item={this.props.item} />
               </Typography>
             </CardContent>
