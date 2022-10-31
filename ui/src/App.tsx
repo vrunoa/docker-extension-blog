@@ -23,10 +23,6 @@ export function App() {
     setResponse(parseFeed(result));
   };
 
-  useEffect(() => {
-    fetchFeed();
-  }, []);
-
   const fetchFeed = () => {
     setVisible(true);
     fetchAndDisplayResponse()
@@ -38,6 +34,10 @@ export function App() {
         setVisible(false);
       });
   };
+
+  useEffect(() => {
+    fetchFeed();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

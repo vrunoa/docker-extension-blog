@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Toolbar from "@mui/material/Toolbar";
-import { Button, Card, IconButton, Stack, Typography } from "@mui/material";
+import { Card, IconButton, Stack, Typography } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import FaceBookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YoutubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import AppBar from "@mui/material/AppBar";
 import DesktopClientHelper from "../desktop";
 import { ITopBar } from "../interfaces";
 

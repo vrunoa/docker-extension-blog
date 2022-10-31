@@ -1,6 +1,4 @@
 import { createDockerDesktopClient } from "@docker/extension-api-client";
-import electron from "electron-to-chromium";
-console.log(electron);
 
 const client = createDockerDesktopClient();
 
