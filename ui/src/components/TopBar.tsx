@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Toolbar from "@mui/material/Toolbar";
-import {Button, Card, IconButton, Stack, Typography} from "@mui/material";
+import { Button, Card, IconButton, Stack, Typography } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import FaceBookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -8,7 +8,7 @@ import YoutubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import AppBar from "@mui/material/AppBar";
 import DesktopClientHelper from "../desktop";
-import {ITopBar} from "../interfaces";
+import { ITopBar } from "../interfaces";
 
 const links = {
   fb: "https://www.facebook.com/docker.run",
@@ -30,23 +30,39 @@ export default class TopBar extends Component<ITopBar> {
       <>
         <Card sx={{ flexGrow: 1 }}>
           <Toolbar>
-            <IconButton edge="start" size={"small"} onClick={() => this.props.refresher()}>
+            <IconButton
+              edge="start"
+              size={"small"}
+              onClick={() => this.props.refresher()}
+            >
               <RefreshIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Docker Blog
             </Typography>
             <Stack direction="row" alignItems="end">
-              <IconButton size={"small"} onClick={(el) => this.desktop.openUrl(links.fb)}>
+              <IconButton
+                size={"small"}
+                onClick={(el) => this.desktop.openUrl(links.fb)}
+              >
                 <FaceBookIcon />
               </IconButton>
-              <IconButton size={"small"} onClick={(el) => this.desktop.openUrl(links.tw)}>
+              <IconButton
+                size={"small"}
+                onClick={(el) => this.desktop.openUrl(links.tw)}
+              >
                 <TwitterIcon />
               </IconButton>
-              <IconButton size={"small"} onClick={(el) => this.desktop.openUrl(links.yt)}>
+              <IconButton
+                size={"small"}
+                onClick={(el) => this.desktop.openUrl(links.yt)}
+              >
                 <YoutubeIcon />
               </IconButton>
-              <IconButton size={"small"} onClick={(el) => this.desktop.openUrl(links.in)}>
+              <IconButton
+                size={"small"}
+                onClick={(el) => this.desktop.openUrl(links.in)}
+              >
                 <LinkedInIcon />
               </IconButton>
             </Stack>

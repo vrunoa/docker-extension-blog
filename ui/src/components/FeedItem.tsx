@@ -69,7 +69,9 @@ export default class FeedItem extends Component<IItem> {
               <Stack direction="row" alignItems="end" sx={{ flexGrow: 1 }}>
                 <LocalOfferIcon sx={{ marginRight: "0.5em" }} />
                 {this.props.item?.categories?.map((cat, i) => {
-                  return <CategoryLink category={cat} key={`category-${cat}-i`} />;
+                  return (
+                    <CategoryLink category={cat} key={`category-${cat}-i`} />
+                  );
                 })}
               </Stack>
             </CardActions>

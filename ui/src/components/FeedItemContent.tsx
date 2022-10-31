@@ -1,6 +1,6 @@
 import { CheerioAPI, load } from "cheerio";
 import { Component } from "react";
-import {IItem, Markup} from "../interfaces";
+import { IItem, Markup } from "../interfaces";
 
 const sanitizers = {
   video: ($: CheerioAPI) => {
