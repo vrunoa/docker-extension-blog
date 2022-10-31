@@ -61,7 +61,7 @@ export default class FeedItem extends Component<IItem> {
               <Typography variant="h6" component="div">
                 {this.props.item.description}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2" component="div">
                 <FeedItemContent item={this.props.item} />
               </Typography>
             </CardContent>
