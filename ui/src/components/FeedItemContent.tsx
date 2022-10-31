@@ -16,10 +16,8 @@ const sanitizers = {
       if (href.startsWith("#")) {
         continue;
       }
-      delete el.attribs.href;
-      delete el.attribs.rel;
-      delete el.attribs.target;
-      // el.attribs.href = "#"
+      el.attribs.target = "blank";
+      el.attribs.onclick = `eval(window.ddClient.host.openExternal("${href}"))`;
     }
   },
   img: ($: CheerioAPI) => {
@@ -31,12 +29,14 @@ const sanitizers = {
   },
 };
 
-function sanitize(content: string): string {
+function sanitize(content: string, debug = false): string {
   const $ = load(content);
   for (let s of Object.keys(sanitizers)) {
     sanitizers[s]($);
   }
-  // console.log($("body").html());
+  if (debug) {
+    console.log($("body").html());
+  }
   return $("body").html();
 }
 
@@ -45,11 +45,12 @@ function markup(content): Markup {
 }
 
 export default class FeedItemContent extends Component<IItem> {
+
   render() {
     return (
       <>
         <div
-          className={"content"}
+          className={"feed-item-content"}
           dangerouslySetInnerHTML={markup(this.props.item.content)}
         />
       </>
