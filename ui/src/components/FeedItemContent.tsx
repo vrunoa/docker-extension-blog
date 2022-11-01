@@ -45,7 +45,6 @@ function markup(content): Markup {
 }
 
 export default class FeedItemContent extends Component<IItem> {
-
   render() {
     return (
       <>

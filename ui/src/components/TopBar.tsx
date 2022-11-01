@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Toolbar from "@mui/material/Toolbar";
-import {Card, IconButton, Stack, Tooltip, Typography} from "@mui/material";
+import { Card, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import FaceBookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -36,7 +36,7 @@ export default class TopBar extends Component<ITopBar> {
                 onClick={() => this.props.refresher()}
               >
                 <RefreshIcon />
-            </IconButton>
+              </IconButton>
             </Tooltip>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Docker Blog
