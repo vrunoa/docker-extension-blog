@@ -37,9 +37,10 @@ jobs:
 
       - name: Install deps
         working-directory: ./ui
+        run: |
+          npm ci
 
       - name: Lint project
         working-directory: ./ui
         run: |
-          npm ci
           npm run prettier:check
