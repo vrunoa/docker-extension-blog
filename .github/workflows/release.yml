@@ -1,0 +1,33 @@
+name: docker release
+
+on:
+  pull_request:
+    push:
+      branches:
+        - main
+  push:
+    tags:
+      - v*
+
+env:
+  DOCKER_USER: ${{secrets.DOCKER_USER}}
+  DOCKER_PAT: ${{secrets.DOCKER_PAT}}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: docker login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ env.DOCKER_PAT }}
+
+      - name: docker push extension
+        env:
+          DOCKER_TAG: $GITHUB_REF_NAME
+        run: |
+          echo $DOCKER_TAG
