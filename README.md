@@ -1,4 +1,4 @@
-# [WIP] docker-extension-blog
+# docker-extension-blog
 
 Get the latest news, tips and tricks about Docker with this extension
 
