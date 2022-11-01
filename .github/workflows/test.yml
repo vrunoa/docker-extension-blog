@@ -28,8 +28,8 @@ jobs:
 
   ui-lint:
     runs-on: ubuntu-latest
-      container:
-        image: node:18
+    container:
+      image: node:18
 
     steps:
       - name: Checkout Code
