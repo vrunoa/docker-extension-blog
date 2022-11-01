@@ -65,7 +65,7 @@ jobs:
     container:
       image: node:18
 
-    need: ui-lint
+    needs: ui-lint
 
     steps:
       - name: checkout Code
