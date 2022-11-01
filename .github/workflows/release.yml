@@ -5,9 +5,9 @@ on:
     push:
       branches:
         - main
-  push:
-    tags:
-      - v*
+  #push:
+  #  tags:
+  #    - v*
 
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
