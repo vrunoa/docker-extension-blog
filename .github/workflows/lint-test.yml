@@ -19,8 +19,8 @@ jobs:
 
       - name: Lint
         uses: golangci/golangci-lint-action@v3
-        working-directory: ./vm
         with:
+          working-directory: ./vm
           version: v1.49
 
   vm-test:
