@@ -26,4 +26,4 @@ jobs:
         env:
           DOCKER_TAG: $GITHUB_REF_NAME
         run: |
-          echo $DOCKER_TAG
+          make push-extension
