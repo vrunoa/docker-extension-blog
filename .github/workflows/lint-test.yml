@@ -71,13 +71,13 @@ jobs:
       - name: checkout Code
         uses: actions/checkout@v2
 
-    # TODO - move ci to cache artifact
-    - name: install deps
-      working-directory: ./ui
-      run: |
-        npm ci
+      # TODO - move ci to cache artifact
+      - name: install deps
+        working-directory: ./ui
+        run: |
+          npm ci
 
-    - name: test ui project
-      working-directory: ./ui
-      run: |
-        npm test
+      - name: test ui project
+        working-directory: ./ui
+        run: |
+          npm test
