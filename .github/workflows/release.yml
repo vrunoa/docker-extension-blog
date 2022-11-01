@@ -1,13 +1,9 @@
 name: docker release
 
 on:
-  pull_request:
-    push:
-      branches:
-        - main
-  #push:
-  #  tags:
-  #    - v*
+  push:
+    tags:
+      - v*
 
 jobs:
   release:
@@ -23,7 +19,5 @@ jobs:
           password: ${{ secrets.DOCKER_PAT }}
 
       - name: docker push extension
-        env:
-          DOCKER_TAG: $GITHUB_REF_NAME
         run: |
-          make push-extension
+          TAG=${{github.ref_name}} make build-extension
