@@ -1,2 +1,5 @@
+#InteliJ
+**/.idea
+
 node_modules
 ui/build

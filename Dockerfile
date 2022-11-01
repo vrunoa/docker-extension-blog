@@ -29,7 +29,7 @@ LABEL org.opencontainers.image.title="docker-extension-blog" \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
     com.docker.extension.screenshots="" \
     com.docker.extension.detailed-description="" \
-    com.docker.extension.publisher-url="" \
+    com.docker.extension.publisher-url="https://github.com/vrunoa/docker-extension-blog" \
     com.docker.extension.additional-urls="" \
     com.docker.extension.changelog=""
 

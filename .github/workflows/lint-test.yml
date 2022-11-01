@@ -1,0 +1,83 @@
+name: tests pipeline
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  vm-lint:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.19
+
+    steps:
+      - name: checkout Code
+        uses: actions/checkout@v3
+
+      - name: lint vm project
+        uses: golangci/golangci-lint-action@v3
+        with:
+          working-directory: ./vm
+          version: v1.49
+
+  vm-test:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.19
+
+    needs: vm-lint
+    steps:
+
+      - name: checkout Code
+        uses: actions/checkout@v3
+
+      - name: test vm project
+        working-directory: ./vm
+        run: |
+            go vet ./...
+            go test ./...
+
+  ui-lint:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+
+    steps:
+      - name: checkout Code
+        uses: actions/checkout@v2
+
+      # TODO - move ci to cache artifact
+      - name: install deps
+        working-directory: ./ui
+        run: |
+          npm ci
+
+      - name: lint ui project
+        working-directory: ./ui
+        run: |
+          npm run prettier:check
+
+  ui-test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+
+    needs: ui-lint
+
+    steps:
+      - name: checkout Code
+        uses: actions/checkout@v2
+
+      # TODO - move ci to cache artifact
+      - name: install deps
+        working-directory: ./ui
+        run: |
+          npm ci
+
+      - name: test ui project
+        working-directory: ./ui
+        run: |
+          npm test
