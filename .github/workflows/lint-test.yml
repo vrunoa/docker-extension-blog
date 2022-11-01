@@ -14,10 +14,10 @@ jobs:
       image: golang:1.19
 
     steps:
-      - name: Checkout Code
+      - name: checkout Code
         uses: actions/checkout@v3
 
-      - name: Lint
+      - name: lint vm project
         uses: golangci/golangci-lint-action@v3
         with:
           working-directory: ./vm
@@ -31,10 +31,10 @@ jobs:
     needs: vm-lint
     steps:
 
-      - name: Checkout Code
+      - name: checkout Code
         uses: actions/checkout@v3
 
-      - name: Lint project
+      - name: test vm project
         working-directory: ./vm
         run: |
             go vet ./...
@@ -46,15 +46,38 @@ jobs:
       image: node:18
 
     steps:
-      - name: Checkout Code
+      - name: checkout Code
         uses: actions/checkout@v2
 
-      - name: Install deps
+      # TODO - move ci to cache artifact
+      - name: install deps
         working-directory: ./ui
         run: |
           npm ci
 
-      - name: Lint project
+      - name: lint ui project
         working-directory: ./ui
         run: |
           npm run prettier:check
+
+  ui-test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+
+    need: ui-lint
+
+    steps:
+      - name: checkout Code
+        uses: actions/checkout@v2
+
+    # TODO - move ci to cache artifact
+    - name: install deps
+      working-directory: ./ui
+      run: |
+        npm ci
+
+    - name: test ui project
+      working-directory: ./ui
+      run: |
+        npm test
