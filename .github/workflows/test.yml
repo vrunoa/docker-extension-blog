@@ -1,0 +1,45 @@
+name: tests pipeline
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  vm-lint:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.18
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install golangci-lint
+        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.46.1
+
+      - name: Lint project
+        working-directory: ./vm
+        run: |
+          go vet ./...
+          golangci-lint run ./... -v
+
+  ui-lint:
+    runs-on: ubuntu-latest
+      container:
+        image: node:18
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install deps
+        working-directory: ./ui
+
+      - name: Lint project
+        working-directory: ./ui
+        run: |
+          npm ci
+          npm run prettier:check
