@@ -10,7 +10,7 @@ const sanitizers = {
     }
   },
   iframe: ($: CheerioAPI) => {
-    const iframes = $('iframe');
+    const iframes = $("iframe");
     for (let el of iframes) {
       el.attribs.width = "100%";
       delete el.attribs.allow;
