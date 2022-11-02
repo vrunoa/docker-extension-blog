@@ -9,6 +9,13 @@ const sanitizers = {
       el.attribs.width = "100%";
     }
   },
+  iframe: ($: CheerioAPI) => {
+    const iframes = $('iframe');
+    for (let el of iframes) {
+      el.attribs.width = "100%";
+      delete el.attribs.allow;
+    }
+  },
   a: ($: CheerioAPI) => {
     const as = $("a");
     for (let el of as) {
