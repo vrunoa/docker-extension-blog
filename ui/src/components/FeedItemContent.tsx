@@ -13,6 +13,7 @@ const sanitizers = {
     const iframes = $("iframe");
     for (let el of iframes) {
       el.attribs.width = "100%";
+      el.attribs.frameBorder = "0";
       delete el.attribs.allow;
     }
   },
