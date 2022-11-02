@@ -8,6 +8,7 @@ import YoutubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import DesktopClientHelper from "../desktop";
 import { ITopBar } from "../interfaces";
+import MoreMenu from "./MoreMenu";
 
 const links = {
   fb: "https://www.facebook.com/docker.run",
@@ -66,6 +67,7 @@ export default class TopBar extends Component<ITopBar> {
               >
                 <LinkedInIcon />
               </IconButton>
+              <MoreMenu />
             </Stack>
           </Toolbar>
         </Card>

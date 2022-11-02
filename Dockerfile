@@ -31,7 +31,7 @@ LABEL org.opencontainers.image.title="docker-extension-blog" \
     com.docker.extension.detailed-description="" \
     com.docker.extension.publisher-url="https://github.com/vrunoa/docker-extension-blog" \
     com.docker.extension.additional-urls="" \
-    com.docker.extension.changelog=""
+    com.docker.extension.changelog="https://github.com/vrunoa/docker-extension-blog/blob/main/CHANGELOG.md"
 
 COPY --from=builder /backend/bin/service /
 COPY docker-compose.yaml .
