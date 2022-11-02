@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Toolbar from "@mui/material/Toolbar";
-import { Card, IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import {Card, IconButton, Stack, Tooltip, Typography} from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import FaceBookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -8,6 +8,7 @@ import YoutubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import DesktopClientHelper from "../desktop";
 import { ITopBar } from "../interfaces";
+import MoreMenu from "./MoreMenu";
 
 const links = {
   fb: "https://www.facebook.com/docker.run",
@@ -66,6 +67,7 @@ export default class TopBar extends Component<ITopBar> {
               >
                 <LinkedInIcon />
               </IconButton>
+              <MoreMenu />
             </Stack>
           </Toolbar>
         </Card>
