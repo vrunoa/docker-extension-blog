@@ -1,3 +1,7 @@
+# v0.0.3
+
+Sanitize iframe element
+
 # v0.0.2
 
 Add more options menu with Bug Report and Source code menu items
