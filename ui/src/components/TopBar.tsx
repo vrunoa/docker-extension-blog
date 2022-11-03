@@ -6,7 +6,7 @@ import FaceBookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YoutubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import WebIcon from '@mui/icons-material/Web';
+import WebIcon from "@mui/icons-material/Web";
 import DesktopClientHelper from "../desktop";
 import MoreMenu from "./MoreMenu";
 import { ITopBar } from "../interfaces";
@@ -16,7 +16,7 @@ const links = {
   tw: "https://twitter.com/Docker",
   yt: "https://www.youtube.com/user/dockerrun",
   in: "https://www.linkedin.com/company/docker",
-  blog: "https://www.docker.com/blog"
+  blog: "https://www.docker.com/blog",
 };
 
 export default class TopBar extends Component<ITopBar> {
