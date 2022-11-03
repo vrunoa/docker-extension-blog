@@ -45,7 +45,7 @@ export function App() {
       });
   };
 
-  const handleScroll = () : void => {
+  const handleScroll = (): void => {
     const st = window.scrollY || document.documentElement.scrollTop;
     const barEl = window.document.getElementById("top-bar-box");
     const moreEl = window.document.getElementById("more-button-box");
