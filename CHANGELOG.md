@@ -1,3 +1,7 @@
+# v0.0.4
+
+Add pagination
+
 # v0.0.3
 
 Sanitize iframe element
