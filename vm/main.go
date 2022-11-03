@@ -62,7 +62,7 @@ func getFeed(ctx echo.Context) error {
 	fp := gofeed.NewParser()
 	page, err := getPageParam(ctx)
 	if err != nil {
-		logrus.Warnf("failed to get feed: %v", err.Error())
+		logrus.Errorf("failed to get feed: %v", err.Error())
 		return ctx.JSON(http.StatusInternalServerError, HTTPMessageBody{Error: err.Error()})
 	}
 	cont, cancel := context.WithTimeout(ctx.Request().Context(), time.Second*60)
@@ -71,7 +71,7 @@ func getFeed(ctx echo.Context) error {
 	logger.Debugf("getting feed -> %s", feedUrl)
 	feedRaw, err := fp.ParseURLWithContext(feedUrl, cont)
 	if err != nil {
-		logrus.Warnf("failed to get feed: %v", err.Error())
+		logrus.Errorf("failed to get feed: %v", err.Error())
 		return ctx.JSON(http.StatusInternalServerError, HTTPMessageBody{Error: err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, HTTPMessageBody{Feed: feedRaw})
