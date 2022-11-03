@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
+	"strconv"
 
 	"net"
 	"net/http"
@@ -15,7 +17,7 @@ import (
 )
 
 const (
-	dockerFeed = "https://www.docker.com/feed/"
+	dockerFeed = "https://www.docker.com/feed"
 )
 
 var logger = logrus.New()
@@ -47,11 +49,27 @@ func listen(path string) (net.Listener, error) {
 	return net.Listen("unix", path)
 }
 
+func getPageParam(ctx echo.Context) (int, error) {
+	pageParam := ctx.QueryParam("page")
+	page, err := strconv.Atoi(pageParam)
+	if err != nil {
+		return 1, err
+	}
+	return page, nil
+}
+
 func getFeed(ctx echo.Context) error {
 	fp := gofeed.NewParser()
+	page, err := getPageParam(ctx)
+	if err != nil {
+		logrus.Warnf("failed to get feed: %v", err.Error())
+		return ctx.JSON(http.StatusInternalServerError, HTTPMessageBody{Error: err.Error()})
+	}
 	cont, cancel := context.WithTimeout(ctx.Request().Context(), time.Second*60)
 	defer cancel()
-	feedRaw, err := fp.ParseURLWithContext(dockerFeed, cont)
+	feedUrl := fmt.Sprintf("%s?paged=%d", dockerFeed, page)
+	logger.Debugf("getting feed -> %s", feedUrl)
+	feedRaw, err := fp.ParseURLWithContext(feedUrl, cont)
 	if err != nil {
 		logrus.Warnf("failed to get feed: %v", err.Error())
 		return ctx.JSON(http.StatusInternalServerError, HTTPMessageBody{Error: err.Error()})
