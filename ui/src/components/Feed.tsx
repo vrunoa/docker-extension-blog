@@ -19,9 +19,9 @@ export default class Feed extends Component<IFeed> {
           align="right"
           padding={1}
         >
-          Last updated: {this.formatUpdated(this.props.feed?.updated)}
+          Last updated: {this.formatUpdated(this.props.updated)}
         </Typography>
-        {this.props.feed?.items?.map((item, i) => {
+        {this.props.items?.map((item, i) => {
           return item.description ? (
             <FeedItem item={item} key={`feed-item-${i}`} />
           ) : (
