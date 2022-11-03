@@ -2,16 +2,18 @@ import React, { useEffect } from "react";
 import { LinearProgress, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Feed from "./components/Feed";
-import { FeedResponse } from "./interfaces";
+import {IFeed, Item} from "./interfaces";
 import DesktopClientHelper from "./desktop";
 import TopBar from "./components/TopBar";
 
 export function App() {
-  const [response, setResponse] = React.useState<FeedResponse>();
-  const [visible, setVisible] = React.useState<boolean>();
+  const [page, setPage] = React.useState<number>(1);
+  const [updated, setUpdated] = React.useState<string>()
+  const [feed, setFeed] = React.useState<Array<Item>>([]);
+  const [visible, setVisible] = React.useState<boolean>(false);
   const desktop = new DesktopClientHelper();
 
-  const parseFeed = (result: any): FeedResponse => {
+  const parseFeed = (result: any): IFeed => {
     return {
       updated: result.Feed?.updated,
       items: result.Feed?.items,
@@ -19,8 +21,11 @@ export function App() {
   };
 
   const fetchAndDisplayResponse = async () => {
-    const result = await desktop.get("/feed");
-    setResponse(parseFeed(result));
+    const raw = await desktop.get(`/feed?page=${page}`);
+    const result = parseFeed(raw)
+    setFeed(feed?.concat(result.items));
+    setUpdated(result.updated)
+    setPage(page+1);
   };
 
   const fetchFeed = () => {
@@ -45,19 +50,18 @@ export function App() {
         <TopBar refresher={fetchFeed} />
       </Box>
       <Box sx={{ flexGrow: 1 }}>{visible && <LinearProgress />}</Box>
-      <Feed feed={response} />
+      <Feed items={feed} updated={updated} />
       <Box sx={{ flexGrow: 1 }}>
         <Button
           sx={{ flexGrow: 1 }}
           fullWidth={true}
           variant={"contained"}
-          onClick={() => {
-            desktop.openUrl("https://docker.com/blog");
-          }}
+          onClick={() => { fetchFeed(); }}
         >
           More
         </Button>
       </Box>
+      <Box sx={{ flexGrow: 1 }}>{visible && <LinearProgress />}</Box>
     </>
   );
 }

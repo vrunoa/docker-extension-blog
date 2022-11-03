@@ -17,12 +17,8 @@ export interface IItem {
 }
 
 export interface IFeed {
-  feed: FeedResponse;
-}
-
-export interface FeedResponse {
-  updated: string;
   items: Array<Item>;
+  updated: string;
 }
 
 export interface ICategory {

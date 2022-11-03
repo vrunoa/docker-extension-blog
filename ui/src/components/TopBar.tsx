@@ -6,15 +6,17 @@ import FaceBookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YoutubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import WebIcon from '@mui/icons-material/Web';
 import DesktopClientHelper from "../desktop";
-import { ITopBar } from "../interfaces";
 import MoreMenu from "./MoreMenu";
+import { ITopBar } from "../interfaces";
 
 const links = {
   fb: "https://www.facebook.com/docker.run",
   tw: "https://twitter.com/Docker",
   yt: "https://www.youtube.com/user/dockerrun",
   in: "https://www.linkedin.com/company/docker",
+  blog: "https://www.docker.com/blog"
 };
 
 export default class TopBar extends Component<ITopBar> {
@@ -43,6 +45,12 @@ export default class TopBar extends Component<ITopBar> {
               Docker Blog
             </Typography>
             <Stack direction="row" alignItems="end">
+              <IconButton
+                size={"small"}
+                onClick={(el) => this.desktop.openUrl(links.blog)}
+              >
+                <WebIcon />
+              </IconButton>
               <IconButton
                 size={"small"}
                 onClick={(el) => this.desktop.openUrl(links.fb)}
