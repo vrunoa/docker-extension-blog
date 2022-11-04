@@ -6,6 +6,7 @@ import { IFeed, Item } from "./interfaces";
 import DesktopClientHelper from "./desktop";
 import TopBar from "./components/TopBar";
 import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
+import getStore from "./store";
 
 export function App() {
   const [page, setPage] = React.useState<number>(1);
@@ -15,6 +16,7 @@ export function App() {
   const [progressBottom, setProgressBottom] = React.useState<boolean>(false);
   const [scroll, setScroll] = React.useState<boolean>(false);
   const desktop = new DesktopClientHelper();
+  const store = getStore();
 
   const parseFeed = (result: any): IFeed => {
     return {
@@ -26,12 +28,19 @@ export function App() {
   const fetchAndDisplayResponse = async () => {
     const raw = await desktop.get(`/feed?page=${page}`);
     const result = parseFeed(raw);
-    setFeed(feed?.concat(result.items));
+    const items = feed?.concat(result.items);
+    setFeed(items);
     setUpdated(result.updated);
     setPage(page + 1);
+    store.set("feed", items);
   };
 
-  const fetchFeed = (progressBottom = false) => {
+  const fetchFeed = (clear = true, progressBottom = false) => {
+    store.remove("feed");
+    if (clear) {
+      setPage(1);
+      setFeed([]);
+    }
     setProgressTop(true);
     setProgressBottom(progressBottom);
     fetchAndDisplayResponse()
@@ -43,6 +52,16 @@ export function App() {
         setProgressTop(false);
         setProgressBottom(false);
       });
+  };
+
+  const initialFeed = () => {
+    const storedFeed = store.get("feed");
+    if (storedFeed) {
+      setPage(1);
+      setFeed(storedFeed);
+      return;
+    }
+    fetchFeed();
   };
 
   const handleScroll = (): void => {
@@ -60,7 +79,7 @@ export function App() {
   };
 
   useEffect(() => {
-    fetchFeed();
+    initialFeed();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -93,7 +112,7 @@ export function App() {
           fullWidth={true}
           variant={"contained"}
           onClick={() => {
-            fetchFeed(true);
+            fetchFeed(false, true);
           }}
         >
           More
