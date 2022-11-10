@@ -129,7 +129,9 @@ func (h *handler) FetchFeed(ectx echo.Context) error {
 	}
 	//  only caching first page now
 	if page == 1 {
-		h.saveCache(ctx, *raw)
+		if err := h.saveCache(ctx, *raw); err != nil {
+			logger.Warnf("failed to save cache: %v", err)
+		}
 	}
 	return ectx.JSON(http.StatusOK, HTTPMessageBody{Feed: feed})
 }
