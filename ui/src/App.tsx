@@ -11,7 +11,6 @@ let page = 1;
 let items = [];
 
 export function App() {
-
   const [updated, setUpdated] = React.useState<string>();
   const [feed, setFeed] = React.useState<Array<Item>>([]);
   const [progressTop, setProgressTop] = React.useState<boolean>(false);
@@ -36,7 +35,7 @@ export function App() {
     setProgressBottom(progressBottom);
     fetchAndDisplayResponse(page)
       .then((result) => {
-        items = items?.concat(result.items)
+        items = items?.concat(result.items);
         setFeed(items);
         setUpdated(result.updated);
       })
