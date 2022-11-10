@@ -20,4 +20,4 @@ jobs:
 
       - name: docker push extension
         run: |
-          TAG=${{github.ref_name}} make push-extension
+          TAG=${{github.ref_name}} COMMIT=${{github.Commit}} make push-extension
