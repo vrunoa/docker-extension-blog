@@ -3,12 +3,13 @@ package main
 import (
 	"flag"
 
+	"net"
+	"os"
+
 	"docker-extension-blog/internal/handler"
 	"docker-extension-blog/internal/logger"
 	"docker-extension-blog/internal/store"
-
-	"net"
-	"os"
+	"docker-extension-blog/internal/version"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/labstack/echo"
@@ -23,12 +24,14 @@ func main() {
 	os.RemoveAll(socketPath)
 
 	logger.Init(&logrus.JSONFormatter{})
-	logger.Infof("starting listening on %s\n", socketPath)
+	logger.Infof("starting extension %s@%s", version.Version, version.GitCommit)
+
 	router := echo.New()
 	router.HideBanner = true
 
 	startURL := ""
 
+	logger.Infof("starting listening on %s\n", socketPath)
 	ln, err := listen(socketPath)
 	if err != nil {
 		logrus.Fatal(err)

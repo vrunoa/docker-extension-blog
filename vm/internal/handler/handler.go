@@ -14,12 +14,15 @@ import (
 
 	"docker-extension-blog/internal/logger"
 	"docker-extension-blog/internal/store"
+	"docker-extension-blog/internal/version"
 )
 
 const (
-	dockerFeed   = "https://www.docker.com/feed"
 	cacheKey     = "feed"
-	cacheTimeout = time.Minute * 1
+	cacheTimeout = time.Minute * 10
+	dockerFeed   = "https://www.docker.com/feed"
+	userAgent    = "vrunoa/docker-extension-blog"
+	pageParam    = "page"
 )
 
 type handler struct {
@@ -33,10 +36,10 @@ type HTTPMessageBody struct {
 }
 
 func getPageParam(ctx echo.Context) (int, error) {
-	pageParam := ctx.QueryParam("page")
-	page, err := strconv.Atoi(pageParam)
+	param := ctx.QueryParam(pageParam)
+	page, err := strconv.Atoi(param)
 	if err != nil {
-		logger.Warnf("warn -> %v", err)
+		logger.Warnf("failed to get QueryParam -> %v", err)
 		return 1, err
 	}
 	return page, nil
@@ -66,7 +69,7 @@ func (h *handler) getCacheFeed(ctx context.Context) (*gofeed.Feed, error) {
 }
 
 func (h *handler) saveCache(ctx context.Context, value string) error {
-	return h.store.Set(ctx, "feed", value, cacheTimeout)
+	return h.store.Set(ctx, cacheKey, value, cacheTimeout)
 }
 
 func (h *handler) requestFeed(ctx context.Context, page int) (*string, error) {
@@ -76,7 +79,7 @@ func (h *handler) requestFeed(ctx context.Context, page int) (*string, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("User-Agent", "vrunoa/docker-extension-blog")
+	req.Header.Add("User-Agent", fmt.Sprintf("%s@%s", userAgent, version.Version))
 	logger.Infof("getting feed: %s", feedUrl)
 	res, err := client.Do(req)
 	if err != nil {
@@ -116,7 +119,7 @@ func (h *handler) FetchFeed(ectx echo.Context) error {
 
 	feed, err := h.getCacheFeed(ctx)
 	if err == nil && feed != nil && page == 1 {
-		logger.Info("using cache")
+		logger.Debug("using cache")
 		return ectx.JSON(http.StatusOK, HTTPMessageBody{Feed: feed})
 	}
 
