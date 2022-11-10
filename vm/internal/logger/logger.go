@@ -12,17 +12,17 @@ func Init(f logrus.Formatter) {
 }
 
 func Warnf(format string, args ...interface{}) {
-	logger.Warnf(format, args)
+	logger.Warnf(format, args...)
 }
 
 func Infof(format string, args ...interface{}) {
-	logger.Infof(format, args)
+	logger.Infof(format, args...)
 }
 
 func Debug(args ...interface{}) {
-	logger.Debug(args)
+	logger.Debug(args...)
 }
 
 func Fatal(args ...interface{}) {
-	logger.Fatal(args)
+	logger.Fatal(args...)
 }
