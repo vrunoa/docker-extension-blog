@@ -7,6 +7,8 @@ import {
   Stack,
   Fab,
   Tooltip,
+  Link,
+  CircularProgress,
 } from "@mui/material";
 import { IItem } from "../interfaces";
 import React, { Component } from "react";
@@ -14,8 +16,11 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import LinkIcon from "@mui/icons-material/Link";
 import moment from "moment";
 import CategoryLink from "./CategoryLink";
-import FeedItemContent from "./FeedItemContent";
 import DesktopClientHelper from "../desktop";
+import { KeyboardArrowUp } from "@mui/icons-material";
+import FeedItemContentProgress from "./FeedItemContentProgress";
+
+const FeedItemContent = React.lazy(() => import("./FeedItemContent"));
 
 export default class FeedItem extends Component<IItem> {
   desktop: DesktopClientHelper;
@@ -29,10 +34,20 @@ export default class FeedItem extends Component<IItem> {
     return moment(datetime, "").fromNow();
   };
 
+  guid = (): string => {
+    let ur = new URL(this.props.item?.guid);
+    let guid = ur?.searchParams.get("p");
+    return guid;
+  };
+
   render() {
     return (
       <>
-        <Box sx={{ flexGrow: 1 }} marginBottom={2}>
+        <Box
+          sx={{ flexGrow: 1 }}
+          marginBottom={2}
+          id={"feed-item-anchor-" + this.guid()}
+        >
           <Card sx={{ flexGrow: 1 }}>
             <CardContent>
               <Stack sx={{ position: "absolute" }}>
@@ -65,11 +80,19 @@ export default class FeedItem extends Component<IItem> {
                 {this.props.item.description}
               </Typography>
               <Typography variant="body2" component="div">
-                <FeedItemContent item={this.props.item} />
+                <React.Suspense fallback={<FeedItemContentProgress />}>
+                  <FeedItemContent item={this.props.item} />
+                </React.Suspense>
               </Typography>
             </CardContent>
             <CardActions>
-              <Stack direction="row" alignItems="end" sx={{ flexGrow: 1 }}>
+              <Stack direction="row" sx={{ flexGrow: 1 }}>
+                <Link
+                  href={"#feed-item-anchor-" + this.guid()}
+                  sx={{ position: "absolute", right: "3em" }}
+                >
+                  <KeyboardArrowUp />
+                </Link>
                 <LocalOfferIcon sx={{ marginRight: "0.5em" }} />
                 {this.props.item.categories?.map((cat, i) => {
                   return (

@@ -10,6 +10,7 @@ export interface Item {
   content: string;
   link: string;
   categories: Array<string>;
+  guid: string;
 }
 
 export interface IItem {

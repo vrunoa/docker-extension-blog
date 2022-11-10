@@ -7,7 +7,7 @@ Get the latest news, tips and tricks about Docker with this extension
 ## Install
 
 ```bash
-docker extension install vrunoa/docker-extension-blog:v0.0.4
+docker extension install vrunoa/docker-extension-blog:v0.0.5
 ```
 
 ## Development
