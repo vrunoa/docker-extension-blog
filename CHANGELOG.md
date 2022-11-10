@@ -1,3 +1,8 @@
+# v0.0.5
+
+Add local Redis cache
+Add anchors to each feed item
+
 # v0.0.4
 
 Add pagination
