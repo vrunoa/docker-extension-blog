@@ -1,26 +1,19 @@
 package main
 
 import (
-	"context"
 	"flag"
-	"fmt"
-	"strconv"
+
+	"docker-extension-blog/internal/handler"
+	"docker-extension-blog/internal/logger"
+	"docker-extension-blog/internal/store"
 
 	"net"
-	"net/http"
 	"os"
-	"time"
 
+	"github.com/go-redis/redis/v8"
 	"github.com/labstack/echo"
-	"github.com/mmcdole/gofeed"
 	"github.com/sirupsen/logrus"
 )
-
-const (
-	dockerFeed = "https://www.docker.com/feed"
-)
-
-var logger = logrus.New()
 
 func main() {
 	var socketPath string
@@ -29,6 +22,7 @@ func main() {
 
 	os.RemoveAll(socketPath)
 
+	logger.Init(&logrus.JSONFormatter{})
 	logger.Infof("starting listening on %s\n", socketPath)
 	router := echo.New()
 	router.HideBanner = true
@@ -41,43 +35,19 @@ func main() {
 	}
 	router.Listener = ln
 
-	router.GET("/feed", getFeed)
+	r := redis.NewClient(&redis.Options{
+		Addr:     "redis-docker-extension-blog:6379",
+		Password: "",
+		DB:       0,
+	})
+
+	s := store.New(r)
+	h := handler.New(s)
+
+	router.GET("/feed", h.FetchFeed)
 	logger.Fatal(router.Start(startURL))
 }
 
 func listen(path string) (net.Listener, error) {
 	return net.Listen("unix", path)
-}
-
-func getPageParam(ctx echo.Context) (int, error) {
-	pageParam := ctx.QueryParam("page")
-	page, err := strconv.Atoi(pageParam)
-	if err != nil {
-		return 1, err
-	}
-	return page, nil
-}
-
-func getFeed(ctx echo.Context) error {
-	fp := gofeed.NewParser()
-	page, err := getPageParam(ctx)
-	if err != nil {
-		logrus.Errorf("failed to get feed: %v", err.Error())
-		return ctx.JSON(http.StatusInternalServerError, HTTPMessageBody{Error: err.Error()})
-	}
-	cont, cancel := context.WithTimeout(ctx.Request().Context(), time.Second*60)
-	defer cancel()
-	feedUrl := fmt.Sprintf("%s?paged=%d", dockerFeed, page)
-	logger.Debugf("getting feed -> %s", feedUrl)
-	feedRaw, err := fp.ParseURLWithContext(feedUrl, cont)
-	if err != nil {
-		logrus.Errorf("failed to get feed: %v", err.Error())
-		return ctx.JSON(http.StatusInternalServerError, HTTPMessageBody{Error: err.Error()})
-	}
-	return ctx.JSON(http.StatusOK, HTTPMessageBody{Feed: feedRaw})
-}
-
-type HTTPMessageBody struct {
-	Error string
-	Feed  *gofeed.Feed
 }

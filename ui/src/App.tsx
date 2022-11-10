@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { useEffect } from "react";
 import { LinearProgress, Button, Fab } from "@mui/material";
 import Box from "@mui/material/Box";
 import Feed from "./components/Feed";
@@ -6,17 +6,18 @@ import { IFeed, Item } from "./interfaces";
 import DesktopClientHelper from "./desktop";
 import TopBar from "./components/TopBar";
 import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
-import getStore from "./store";
+
+let page = 1;
+let items = [];
 
 export function App() {
-  const [page, setPage] = React.useState<number>(1);
+
   const [updated, setUpdated] = React.useState<string>();
   const [feed, setFeed] = React.useState<Array<Item>>([]);
   const [progressTop, setProgressTop] = React.useState<boolean>(false);
   const [progressBottom, setProgressBottom] = React.useState<boolean>(false);
   const [scroll, setScroll] = React.useState<boolean>(false);
   const desktop = new DesktopClientHelper();
-  const store = getStore();
 
   const parseFeed = (result: any): IFeed => {
     return {
@@ -25,25 +26,20 @@ export function App() {
     };
   };
 
-  const fetchAndDisplayResponse = async () => {
-    const raw = await desktop.get(`/feed?page=${page}`);
-    const result = parseFeed(raw);
-    const items = feed?.concat(result.items);
-    setFeed(items);
-    setUpdated(result.updated);
-    setPage(page + 1);
-    store.set("feed", items);
+  const fetchAndDisplayResponse = async (p: number): Promise<IFeed> => {
+    const raw = await desktop.get(`/feed?page=${p}`);
+    return parseFeed(raw);
   };
 
-  const fetchFeed = (clear = true, progressBottom = false) => {
-    store.remove("feed");
-    if (clear) {
-      setPage(1);
-      setFeed([]);
-    }
-    setProgressTop(true);
+  const fetchFeed = (progressBottom) => {
+    setProgressTop(!progressBottom);
     setProgressBottom(progressBottom);
-    fetchAndDisplayResponse()
+    fetchAndDisplayResponse(page)
+      .then((result) => {
+        items = items?.concat(result.items)
+        setFeed(items);
+        setUpdated(result.updated);
+      })
       .catch((err) => {
         console.error(err);
         desktop.toast("Failed to load blog feed. Try again in a bit");
@@ -51,17 +47,14 @@ export function App() {
       .finally(() => {
         setProgressTop(false);
         setProgressBottom(false);
+        page++;
       });
   };
 
   const initialFeed = () => {
-    const storedFeed = store.get("feed");
-    if (storedFeed) {
-      setPage(1);
-      setFeed(storedFeed);
-      return;
-    }
-    fetchFeed();
+    page = 1;
+    items = [];
+    fetchFeed(false);
   };
 
   const handleScroll = (): void => {
@@ -99,7 +92,7 @@ export function App() {
         </Fab>
       )}
       <Box sx={{ flexGrow: 1 }} id={"top-bar-box"}>
-        <TopBar refresher={fetchFeed} />
+        <TopBar refresher={initialFeed} />
       </Box>
       <Box sx={{ flexGrow: 1 }}>{progressTop && <LinearProgress />}</Box>
       <Feed items={feed} updated={updated} />
@@ -112,7 +105,7 @@ export function App() {
           fullWidth={true}
           variant={"contained"}
           onClick={() => {
-            fetchFeed(false, true);
+            fetchFeed(true);
           }}
         >
           More
