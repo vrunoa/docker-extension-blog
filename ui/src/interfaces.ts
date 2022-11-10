@@ -33,8 +33,3 @@ export interface Markup {
 export interface ITopBar {
   refresher: any;
 }
-
-export interface FetchOptions {
-  clear: boolean;
-  progressBottom: boolean;
-}
