@@ -2,6 +2,8 @@ FROM golang:1.17-alpine AS builder
 ENV CGO_ENABLED=0
 ARG TAG
 ARG COMMIT
+ARG CHANGELOG
+ARG OWNER
 WORKDIR /backend
 COPY vm/go.* .
 RUN --mount=type=cache,target=/go/pkg/mod \
@@ -27,13 +29,13 @@ RUN npm run build
 FROM alpine
 LABEL org.opencontainers.image.title="docker-extension-blog" \
     org.opencontainers.image.description="Get the latest news, tips and tricks about Docker with this extension" \
-    org.opencontainers.image.vendor="vrunoa" \
+    org.opencontainers.image.vendor="$OWNER" \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
     com.docker.extension.screenshots="" \
     com.docker.extension.detailed-description="" \
     com.docker.extension.publisher-url="https://github.com/vrunoa/docker-extension-blog" \
     com.docker.extension.additional-urls="" \
-    com.docker.extension.changelog="https://github.com/vrunoa/docker-extension-blog/blob/main/CHANGELOG.md"
+    com.docker.extension.changelog="$CHANGELOG"
 
 COPY --from=builder /backend/bin/service /
 COPY docker-compose.yaml .
