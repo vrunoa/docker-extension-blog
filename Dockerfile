@@ -3,7 +3,6 @@ ENV CGO_ENABLED=0
 ARG TAG
 ARG COMMIT
 ARG CHANGELOG
-ARG OWNER
 WORKDIR /backend
 COPY vm/go.* .
 RUN --mount=type=cache,target=/go/pkg/mod \
@@ -29,7 +28,7 @@ RUN npm run build
 FROM alpine
 LABEL org.opencontainers.image.title="docker-extension-blog" \
     org.opencontainers.image.description="Get the latest news, tips and tricks about Docker with this extension" \
-    org.opencontainers.image.vendor="$OWNER" \
+    org.opencontainers.image.vendor="vrunoa" \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
     com.docker.extension.screenshots="" \
     com.docker.extension.detailed-description="" \
