@@ -20,6 +20,6 @@ jobs:
 
       - name: docker push extension
         run: |
-          CHANGELOG=$("git tag -l ${{github.ref_name}} --format='%(subject)'")
+          CHANGELOG=$(git tag -l ${{github.ref_name}} --format='%(subject)')
           echo $CHANGELOG
           TAG=${{github.ref_name}} COMMIT=${{github.sha}} OWNER=${{github.repository_owner}} CHANGELOG="$CHANGELOG" make push-extension
