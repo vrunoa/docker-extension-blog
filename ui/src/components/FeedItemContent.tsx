@@ -17,7 +17,7 @@ const sanitizers = {
       delete el.attribs.allow;
     }
   },
-  a: ($: CheerioAPI) => {
+  ael: ($: CheerioAPI) => {
     const as = $("a");
     for (let el of as) {
       const href = el.attribs.href;
