@@ -34,7 +34,7 @@ export default class ShareDialog extends Component<IItemShare> {
 
   tweet = () => {
     let intent = `https://twitter.com/intent/tweet`;
-    intent += `?text=${encodeURIComponent("I love this new post")}`;
+    intent += `?text=${encodeURIComponent("I love this post!")}`;
     intent += `&url=${encodeURIComponent(this.props.item.link)}`;
     intent += `&hashtags=docker`;
     intent += `&via=docker`;
@@ -67,14 +67,14 @@ export default class ShareDialog extends Component<IItemShare> {
           TransitionComponent={Transition}
           onClose={this.props.onClose}
         >
-          <DialogTitle>Share this awesome post!</DialogTitle>
+          <DialogTitle style={{fontWeight: "bold"}}>{this.props.item?.title}</DialogTitle>
           <DialogContent dividers>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              {this.props.item?.title} on
+              Share this awesome post on
             </Typography>
             <div>
               <Stack direction={"row"}>
