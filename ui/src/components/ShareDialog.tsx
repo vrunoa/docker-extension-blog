@@ -67,7 +67,9 @@ export default class ShareDialog extends Component<IItemShare> {
           TransitionComponent={Transition}
           onClose={this.props.onClose}
         >
-          <DialogTitle style={{fontWeight: "bold"}}>{this.props.item?.title}</DialogTitle>
+          <DialogTitle style={{ fontWeight: "bold" }}>
+            {this.props.item?.title}
+          </DialogTitle>
           <DialogContent dividers>
             <Typography
               sx={{ fontSize: 14 }}
