@@ -7,7 +7,7 @@ Get the latest news, tips and tricks about Docker with this extension
 ## Install
 
 ```bash
-docker extension install vrunoa/docker-extension-blog:v0.0.5
+docker extension install vrunoa/docker-extension-blog:v0.0.6
 ```
 
 ## Development
@@ -19,15 +19,15 @@ make install-extension
 
 Enable devtools console
 ```bash
-docker extension dev debug vrunoa/docker-extension-blog
+make dev-debug
 ```
 
 Enable ui development
 ```bash
-docker extension dev ui-source vrunoa/docker-extension-blog http://localhost:3000
+make dev-ui
 ```
 
 Reset debug
 ```bash
-docker extension dev reset vrunoa/docker-extension-blog
+make dev-reset
 ```

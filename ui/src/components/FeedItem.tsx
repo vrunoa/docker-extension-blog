@@ -8,7 +8,6 @@ import {
   Fab,
   Tooltip,
   Link,
-  CircularProgress,
 } from "@mui/material";
 import { IItem } from "../interfaces";
 import React, { Component } from "react";
@@ -19,19 +18,28 @@ import CategoryLink from "./CategoryLink";
 import DesktopClientHelper from "../desktop";
 import { KeyboardArrowUp } from "@mui/icons-material";
 import FeedItemContentProgress from "./FeedItemContentProgress";
+import ShareIcon from "@mui/icons-material/Share";
+import ShareDialog from "./ShareDialog";
 
 const FeedItemContent = React.lazy(() => import("./FeedItemContent"));
 
-export default class FeedItem extends Component<IItem> {
+export default class FeedItem extends Component<IItem, { share: boolean }> {
   desktop: DesktopClientHelper;
 
   constructor(props) {
     super(props);
     this.desktop = new DesktopClientHelper();
+    this.state = {
+      share: false,
+    };
   }
 
   formatDate = (datetime: string): string => {
     return moment(datetime, "").fromNow();
+  };
+
+  shareIntent = (): void => {
+    this.setState({ share: true });
   };
 
   guid = (): string => {
@@ -43,6 +51,13 @@ export default class FeedItem extends Component<IItem> {
   render() {
     return (
       <>
+        <ShareDialog
+          item={this.props.item}
+          open={this.state.share}
+          onClose={() => {
+            this.setState({ share: false });
+          }}
+        />
         <Box
           sx={{ flexGrow: 1 }}
           marginBottom={2}
@@ -50,7 +65,26 @@ export default class FeedItem extends Component<IItem> {
         >
           <Card sx={{ flexGrow: 1 }}>
             <CardContent>
-              <Stack sx={{ position: "absolute" }}>
+              <Stack
+                direction={"row"}
+                sx={{ position: "absolute", right: "4em" }}
+                spacing={1}
+              >
+                <Tooltip title={"share"}>
+                  <Fab size="small" onClick={() => this.shareIntent()}>
+                    <ShareIcon />
+                  </Fab>
+                </Tooltip>
+                <Tooltip title={"open"}>
+                  <Fab
+                    size="small"
+                    onClick={() => this.desktop.openUrl(this.props.item.link)}
+                  >
+                    <LinkIcon />
+                  </Fab>
+                </Tooltip>
+              </Stack>
+              <Stack>
                 <Typography
                   sx={{ fontSize: 14 }}
                   color="text.secondary"
@@ -62,19 +96,6 @@ export default class FeedItem extends Component<IItem> {
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                   by {this.props.item.author?.name}
                 </Typography>
-              </Stack>
-              <Stack
-                sx={{ flexGrow: 1, marginBottom: "1em" }}
-                alignItems={"end"}
-              >
-                <Tooltip title={"open"}>
-                  <Fab
-                    size="small"
-                    onClick={() => this.desktop.openUrl(this.props.item.link)}
-                  >
-                    <LinkIcon />
-                  </Fab>
-                </Tooltip>
               </Stack>
               <Typography variant="h6" component="div">
                 {this.props.item.description}

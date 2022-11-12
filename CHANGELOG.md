@@ -1,3 +1,7 @@
+# v0.0.6
+
+Add possibility to share post
+
 # v0.0.5
 
 Add local Redis cache

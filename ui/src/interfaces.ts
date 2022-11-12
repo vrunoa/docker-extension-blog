@@ -30,6 +30,16 @@ export interface Markup {
   __html: string;
 }
 
+type refresherFn = () => void;
+
 export interface ITopBar {
-  refresher: any;
+  refresher: refresherFn;
+}
+
+type shareOnCloseFn = () => void;
+
+export interface IItemShare {
+  item: Item;
+  open: boolean;
+  onClose: shareOnCloseFn;
 }

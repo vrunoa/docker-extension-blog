@@ -2,6 +2,7 @@ FROM golang:1.17-alpine AS builder
 ENV CGO_ENABLED=0
 ARG TAG
 ARG COMMIT
+ARG CHANGELOG
 WORKDIR /backend
 COPY vm/go.* .
 RUN --mount=type=cache,target=/go/pkg/mod \
@@ -33,7 +34,7 @@ LABEL org.opencontainers.image.title="docker-extension-blog" \
     com.docker.extension.detailed-description="" \
     com.docker.extension.publisher-url="https://github.com/vrunoa/docker-extension-blog" \
     com.docker.extension.additional-urls="" \
-    com.docker.extension.changelog="https://github.com/vrunoa/docker-extension-blog/blob/main/CHANGELOG.md"
+    com.docker.extension.changelog="$CHANGELOG"
 
 COPY --from=builder /backend/bin/service /
 COPY docker-compose.yaml .
