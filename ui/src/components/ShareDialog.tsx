@@ -5,6 +5,7 @@ import {
   DialogTitle,
   IconButton,
   Stack,
+  Typography,
 } from "@mui/material";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FaceBookIcon from "@mui/icons-material/Facebook";
@@ -68,29 +69,38 @@ export default class ShareDialog extends Component<IItemShare> {
         >
           <DialogTitle>Share this awesome post!</DialogTitle>
           <DialogContent dividers>
-            <Stack direction={"row"}>
-              <IconButton
-                onClick={() => {
-                  this.tweet();
-                }}
-              >
-                <TwitterIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  this.fb();
-                }}
-              >
-                <FaceBookIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  this.in();
-                }}
-              >
-                <LinkedInIcon />
-              </IconButton>
-            </Stack>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              {this.props.item?.title} on
+            </Typography>
+            <div>
+              <Stack direction={"row"}>
+                <IconButton
+                  onClick={() => {
+                    this.tweet();
+                  }}
+                >
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    this.fb();
+                  }}
+                >
+                  <FaceBookIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    this.in();
+                  }}
+                >
+                  <LinkedInIcon />
+                </IconButton>
+              </Stack>
+            </div>
           </DialogContent>
         </Dialog>
       </>
