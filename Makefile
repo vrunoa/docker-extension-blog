@@ -1,5 +1,5 @@
-IMAGE?=vrunoa/docker-extension-blog
-TAG?=latest
+IMAGE?=vrunoa/docker-blog
+TAG?=0.0.0-unknown
 COMMIT?=unknown-commit-sha
 CHANGELOG?=
 
@@ -37,6 +37,9 @@ dev-debug:
 
 dev-ui:
 	docker extension dev ui-source $(IMAGE):$(TAG)  http://localhost:3000
+
+tail-extension:
+	docker ps -f ancestor=$(IMAGE):$(TAG) -q | xargs -I{} docker logs {} -f
 
 help: ## Show this help
 	@echo Please specify a build target. The choices are:

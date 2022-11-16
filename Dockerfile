@@ -11,7 +11,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 COPY vm/. .
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
-    go build -trimpath -ldflags="-s -w -X docker-extension-blog/internal/version.Version=$TAG -X docker-extension-blog/internal/version.GitCommit=$COMMIT" -o bin/service
+    go build -trimpath -ldflags="-s -w -X docker-blog/internal/version.Version=$TAG -X docker-blog/internal/version.GitCommit=$COMMIT" -o bin/service
 
 FROM --platform=$BUILDPLATFORM node:17.7-alpine3.14 AS client-builder
 WORKDIR /ui
@@ -26,7 +26,7 @@ COPY ui /ui
 RUN npm run build
 
 FROM alpine
-LABEL org.opencontainers.image.title="docker-extension-blog" \
+LABEL org.opencontainers.image.title="docker-blog" \
     org.opencontainers.image.description="Get the latest news, tips and tricks about Docker with this extension" \
     org.opencontainers.image.vendor="vrunoa" \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
@@ -34,11 +34,12 @@ LABEL org.opencontainers.image.title="docker-extension-blog" \
     com.docker.extension.detailed-description="" \
     com.docker.extension.publisher-url="https://github.com/vrunoa/docker-extension-blog" \
     com.docker.extension.additional-urls="" \
-    com.docker.extension.changelog="$CHANGELOG"
+    com.docker.extension.changelog="$CHANGELOG" \
+    com.docker.desktop.extension.icon="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png"
 
 COPY --from=builder /backend/bin/service /
 COPY docker-compose.yaml .
 COPY metadata.json .
 COPY docker.svg .
 COPY --from=client-builder /ui/build ui
-CMD /service -socket /run/guest-services/extension-docker-extension-blog.sock
+CMD /service -socket /run/guest-services/extension-docker-blog.sock

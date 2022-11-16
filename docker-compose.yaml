@@ -1,7 +1,7 @@
 services:
-  docker-extension-blog:
+  docker-blog:
     image: ${DESKTOP_PLUGIN_IMAGE}
-  redis-docker-extension-blog:
+  redis-docker-blog:
     image: redis:7-alpine
     ports:
       - "6379:6379"
