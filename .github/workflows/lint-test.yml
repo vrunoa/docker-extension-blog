@@ -10,19 +10,19 @@ jobs:
   validate:
     runs-on: ubuntu-latest
 
-  steps:
-    - name: checkout
-      uses: actions/checkout@v3
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
 
-    - name: docker login
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PAT }}
+      - name: docker login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PAT }}
 
-    - name: Validate extension
-      run: |
-        make validate-extension
+      - name: Validate extension
+        run: |
+          make validate-extension
 
   vm-lint:
     runs-on: ubuntu-latest
