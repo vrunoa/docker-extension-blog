@@ -3,3 +3,5 @@
 
 node_modules
 ui/build
+
+coverage.out

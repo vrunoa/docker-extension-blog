@@ -7,7 +7,6 @@ on:
       - main
 
 jobs:
-
   vm-lint:
     runs-on: ubuntu-latest
     container:
@@ -34,11 +33,16 @@ jobs:
       - name: checkout Code
         uses: actions/checkout@v3
 
+      - name: install dependencies
+        run: |
+          go install github.com/mcubik/goverreport@latest
+
       - name: test vm project
         working-directory: ./vm
         run: |
-            go vet ./...
-            go test ./...
+          go vet ./...
+          go test -coverprofile=coverage.out ./... -v
+          goverreport -sort=block -order=desc -threshold=50
 
   ui-lint:
     runs-on: ubuntu-latest

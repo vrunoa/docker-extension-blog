@@ -3,16 +3,16 @@
   "vm": {
     "composefile": "docker-compose.yaml",
     "exposes": {
-      "socket": "extension-docker-extension-blog.sock"
+      "socket": "extension-docker-blog.sock"
     }
   },
   "ui": {
     "dashboard-tab": {
-      "title": "Blog",
+      "title": "Docker Blog",
       "src": "index.html",
       "root": "ui",
       "backend": {
-        "socket": "extension-docker-extension-blog.sock"
+        "socket": "extension-docker-blog.sock"
       }
     }
   }

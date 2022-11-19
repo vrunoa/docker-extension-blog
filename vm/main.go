@@ -6,10 +6,10 @@ import (
 	"net"
 	"os"
 
-	"docker-extension-blog/internal/handler"
-	"docker-extension-blog/internal/logger"
-	"docker-extension-blog/internal/store"
-	"docker-extension-blog/internal/version"
+	"docker-blog/internal/handler"
+	"docker-blog/internal/logger"
+	"docker-blog/internal/store"
+	"docker-blog/internal/version"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/labstack/echo"
@@ -39,7 +39,7 @@ func main() {
 	router.Listener = ln
 
 	r := redis.NewClient(&redis.Options{
-		Addr:     "redis-docker-extension-blog:6379",
+		Addr:     "redis-docker-blog:6379",
 		Password: "",
 		DB:       0,
 	})

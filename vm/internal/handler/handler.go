@@ -12,16 +12,16 @@ import (
 	"github.com/labstack/echo"
 	"github.com/mmcdole/gofeed"
 
-	"docker-extension-blog/internal/logger"
-	"docker-extension-blog/internal/store"
-	"docker-extension-blog/internal/version"
+	"docker-blog/internal/logger"
+	"docker-blog/internal/store"
+	"docker-blog/internal/version"
 )
 
 const (
 	cacheKey     = "feed"
 	cacheTimeout = time.Minute * 10
 	dockerFeed   = "https://www.docker.com/feed"
-	userAgent    = "vrunoa/docker-extension-blog"
+	userAgent    = "vrunoa/docker-blog"
 	pageParam    = "page"
 )
 

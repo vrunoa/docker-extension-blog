@@ -1,3 +1,8 @@
+# 0.0.7 
+
+* Fix issues raised by `docker extension validate`
+* Change feed item title & subtitle sizes
+
 # v0.0.6
 
 Add possibility to share post

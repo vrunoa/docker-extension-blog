@@ -1,4 +1,4 @@
-module docker-extension-blog
+module docker-blog
 
 go 1.17
 

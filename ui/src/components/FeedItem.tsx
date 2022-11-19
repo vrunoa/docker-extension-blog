@@ -85,19 +85,15 @@ export default class FeedItem extends Component<IItem, { share: boolean }> {
                 </Tooltip>
               </Stack>
               <Stack>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {this.props.item.title} -{" "}
-                  {this.formatDate(this.props.item.published)}
+                <Typography variant="h6" gutterBottom>
+                  {this.props.item.title}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  by {this.props.item.author?.name}
+                  by {this.props.item.author?.name} -{" "}
+                  {this.formatDate(this.props.item.published)}
                 </Typography>
               </Stack>
-              <Typography variant="h6" component="div">
+              <Typography sx={{ fontSize: 16 }} component="div">
                 {this.props.item.description}
               </Typography>
               <Typography variant="body2" component="div">
